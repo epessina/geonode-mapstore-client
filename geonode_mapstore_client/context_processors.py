@@ -14,6 +14,7 @@ from django.conf import settings
 from geonode.upload.utils import get_max_upload_size, get_max_upload_parallelism_limit
 from geonode.utils import get_supported_datasets_file_types
 
+from geonode_mapstore_client.utils import get_metadata_ui_schema
 
 def resource_urls(request):
     """Global values to pass to templates"""
@@ -66,5 +67,6 @@ def resource_urls(request):
         .get("OPTIONS", dict())
         .get("MOSAIC_ENABLED", False),
         "SUPPORTED_DATASET_FILE_TYPES": get_supported_datasets_file_types(),
+        "METADATA_UI_SCHEMA": get_metadata_ui_schema()
     }
     return defaults

@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             initialActions: [
                                 updateGeoNodeSettings.bind(null, settings)
                             ]
-                        });
-                    }, withExtensions(StandardApp));
+                        }, withExtensions(StandardApp));
+                    });
             });
     });
 });

@@ -42,6 +42,7 @@ import UploadDatasetRoute from '@js/routes/UploadDataset';
 import UploadDocumentRoute from '@js/routes/UploadDocument';
 import CatalogueRoute from '@js/routes/Catalogue';
 import MapViewerRoute from '@js/routes/MapViewer';
+import MetadataRoute from '@js/routes/Metadata';
 
 import gnsearch from '@js/reducers/gnsearch';
 import gnresource from '@js/reducers/gnresource';
@@ -106,7 +107,8 @@ const viewers = {
     [appRouteComponentTypes.CATALOGUE]: CatalogueRoute,
     [appRouteComponentTypes.DATASET_UPLOAD]: UploadDatasetRoute,
     [appRouteComponentTypes.DOCUMENT_UPLOAD]: UploadDocumentRoute,
-    [appRouteComponentTypes.MAP_VIEWER]: MapViewerRoute
+    [appRouteComponentTypes.MAP_VIEWER]: MapViewerRoute,
+    [appRouteComponentTypes.METADATA]: MetadataRoute
 };
 
 const routes = CATALOGUE_ROUTES.map(({ component, ...config }) => ({ ...config, component: viewers[component] }));

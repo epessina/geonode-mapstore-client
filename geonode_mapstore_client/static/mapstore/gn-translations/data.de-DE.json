@@ -419,7 +419,11 @@
             "approveResource": "Diese Ressource genehmigen (wird vom erweiterten Workflow verwendet)",
             "publishResource": "Diese Ressource veröffentlichen (wird vom erweiterten Workflow verwendet)",
             "featureResource": "Diese Ressource zu den vorgestellten Ressourcen hinzufügen",
-            "advertiseResource": "Diese Ressource durchsuchbar machen"
+            "advertiseResource": "Diese Ressource durchsuchbar machen",
+            "metadataFor": "Metadaten für",
+            "metadataUpdateError": "Die Metadaten konnten nicht aktualisiert werden",
+            "metadataNotFound": "Für die ausgewählte Ressource wurden keine Metadaten gefunden",
+            "backToResource": "Zurück zur Ressource"
         }
     }
 }

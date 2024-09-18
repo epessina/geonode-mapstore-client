@@ -389,7 +389,11 @@
             "approveResource": "Approve this resource (used by the Advanced Workflow)",
             "publishResource": "Publish this resource (used by the Advanced Workflow)",
             "featureResource": "Add this resource to featured resources",
-            "advertiseResource": "Make this resource searchable"
+            "advertiseResource": "Make this resource searchable",
+            "metadataFor": "Metadata for",
+            "metadataUpdateError": "It was not possible to update the metadata",
+            "metadataNotFound": "Metadata not found for the selected resource",
+            "backToResource": "Back to the resource"
         }
     }
 }

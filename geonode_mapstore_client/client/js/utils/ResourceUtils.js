@@ -343,7 +343,8 @@ export const getResourceTypesInfo = () => ({
             config: 'map_preview'
         })),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
-        formatMetadataUrl: (resource) => (`/maps/${resource.pk}/metadata`),
+        formatMetadataUrl: (resource) => `#/map/${resource.pk}/metadata`,
+        formatMetadataDetailUrl: (resource) => `/maps/${resource.pk}/metadata_detail`,
         catalogPageUrl: '/maps'
     },
     [ResourceTypes.DOCUMENT]: {
@@ -353,8 +354,9 @@ export const getResourceTypesInfo = () => ({
         hasPermission: (resource) => resourceHasPermission(resource, 'download_resourcebase'),
         formatEmbedUrl: (resource) => isDocumentExternalSource(resource) ? undefined : resource?.embed_url && parseDevHostname(resource.embed_url),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
-        formatMetadataUrl: (resource) => (`/documents/${resource.pk}/metadata`),
-        metadataPreviewUrl: (resource) => (`/documents/${resource.pk}/metadata_detail?preview`),
+        formatMetadataUrl: (resource) => `#/document/${resource.pk}/metadata`,
+        formatMetadataDetailUrl: (resource) => `/documents/${resource.pk}/metadata_detail`,
+        metadataPreviewUrl: (resource) => `/documents/${resource.pk}/metadata_detail?preview`,
         catalogPageUrl: '/documents'
     },
     [ResourceTypes.GEOSTORY]: {
@@ -363,7 +365,8 @@ export const getResourceTypesInfo = () => ({
         canPreviewed: (resource) => resourceHasPermission(resource, 'view_resourcebase'),
         formatEmbedUrl: (resource) => resource?.embed_url && parseDevHostname(resource.embed_url),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
-        formatMetadataUrl: (resource) => (`/apps/${resource.pk}/metadata`),
+        formatMetadataUrl: (resource) => `#/geostory/${resource.pk}/metadata`,
+        formatMetadataDetailUrl: (resource) => `/apps/${resource.pk}/metadata_detail`,
         catalogPageUrl: '/geostories'
     },
     [ResourceTypes.DASHBOARD]: {
@@ -372,7 +375,8 @@ export const getResourceTypesInfo = () => ({
         canPreviewed: (resource) => resourceHasPermission(resource, 'view_resourcebase'),
         formatEmbedUrl: (resource) => resource?.embed_url && parseDevHostname(resource.embed_url),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
-        formatMetadataUrl: (resource) => (`/apps/${resource.pk}/metadata`),
+        formatMetadataUrl: (resource) => `#/dashboard/${resource.pk}/metadata`,
+        formatMetadataDetailUrl: (resource) => `/apps/${resource.pk}/metadata_detail`,
         catalogPageUrl: '/dashboards'
     },
     [ResourceTypes.VIEWER]: {
@@ -381,7 +385,8 @@ export const getResourceTypesInfo = () => ({
         canPreviewed: (resource) => resourceHasPermission(resource, 'view_resourcebase'),
         formatEmbedUrl: () => false,
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
-        formatMetadataUrl: (resource) => (`/apps/${resource.pk}/metadata`),
+        formatMetadataUrl: (resource) => `#/viewer/${resource.pk}/metadata`,
+        formatMetadataDetailUrl: (resource) => `/apps/${resource.pk}/metadata_detail`,
         catalogPageUrl: '/all'
     }
 });
@@ -395,7 +400,11 @@ export const getMetadataUrl = (resource) => {
 };
 
 export const getMetadataDetailUrl = (resource) => {
-    return (getMetadataUrl(resource)) ? getMetadataUrl(resource) + '_detail' : '';
+    if (resource) {
+        const { formatMetadataDetailUrl = () => '' } = getResourceTypesInfo()[resource?.resource_type] || {};
+        return formatMetadataDetailUrl(resource);
+    }
+    return '';
 };
 
 export const getResourceStatuses = (resource) => {

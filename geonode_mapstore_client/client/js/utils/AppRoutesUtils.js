@@ -14,7 +14,8 @@ export const appRouteComponentTypes = {
     DATASET_UPLOAD: 'UploadDatasetRoute',
     DOCUMENT_UPLOAD: 'UploadDocumentRoute',
     COMPONENTS: 'ComponentsRoute',
-    MAP_VIEWER: 'MapViewerRoute'
+    MAP_VIEWER: 'MapViewerRoute',
+    METADATA: 'MetadataRoute'
 };
 
 export const COMPONENTS_ROUTES = [
@@ -72,6 +73,12 @@ export const GEOSTORY_ROUTES = [{
 }];
 
 export const CATALOGUE_ROUTES = [
+    {
+        name: 'metadata',
+        path: ['/:resourceType/:pk/metadata'],
+        component: appRouteComponentTypes.METADATA,
+        shouldNotRequestResources: true
+    },
     {
         name: 'dataset_viewer',
         path: [

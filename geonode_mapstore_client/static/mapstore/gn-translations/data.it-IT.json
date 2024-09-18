@@ -421,7 +421,11 @@
             "approveResource": "Approva questa risorsa (utilizzata dall' Advanced Workflow)",
             "publishResource": "Pubblica questa risorsa (utilizzata dall' Advanced Workflow)",
             "featureResource": "Aggiungi questa risorsa alle risorse in evidenza",
-            "advertiseResource": "Rendi questa risorsa ricercabile"
+            "advertiseResource": "Rendi questa risorsa ricercabile",
+            "metadataFor": "Metadati per",
+            "metadataUpdateError": "Non è stato possibile aggiornare i metadati",
+            "metadataNotFound": "Metadati non disponibili per la risorsa selezionata",
+            "backToResource": "Ritorna alla risorsa"
         }
     }
 }

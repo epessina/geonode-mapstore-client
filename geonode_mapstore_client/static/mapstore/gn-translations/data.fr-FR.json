@@ -419,7 +419,11 @@
             "approveResource": "Approuver cette ressource (utilisé par le flux de travail avancé)",
             "publishResource": "Publier cette ressource (utilisé par le flux de travail avancé)",
             "featureResource": "Ajouter cette ressource aux ressources en vedette",
-            "advertiseResource": "Rendre cette ressource consultable"
+            "advertiseResource": "Rendre cette ressource consultable",
+            "metadataFor": "Métadonnées pour",
+            "metadataUpdateError": "Il n'a pas été possible de mettre à jour les métadonnées",
+            "metadataNotFound": "Les métadonnées ne sont pas trouvées pour la ressource sélectionnée",
+            "backToResource": "Retour à la ressource"
         }
     }
 }

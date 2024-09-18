@@ -71,6 +71,7 @@
         let catalogHomeRedirectsTo = geoNodeSettings.CATALOG_HOME_REDIRECTS_TO;
         let defaultCatalogPage = geoNodeSettings.DEFAULT_CATALOG_PAGE || "all";
         let catalogPagePath = geoNodeSettings.CATALOG_PAGE_PATH;
+        let metadataUiSchema = geoNodeSettings.METADATA_UI_SCHEMA || {};
         let customFilters = geoNodeSettings.CUSTOM_FILTERS || {
             "my-resources": {
                 "filter{owner.pk}": "{state('user') && state('user').pk}"
@@ -154,6 +155,7 @@
             pluginsConfigKey: pluginsConfigKey,
             pluginsConfigPatchRules: [...searchServicesPatchRules, ...pluginsConfigPatchRules],
             apikey: '{%if user_apikey %}{{user_apikey}}{% else %}{% endif %}',
+            metadataUiSchema: metadataUiSchema,
             localConfig: {
                 proxyUrl: {
                     url: '{{UPDATED_PROXY_URL|safe }}',

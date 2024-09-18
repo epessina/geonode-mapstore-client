@@ -54,7 +54,8 @@ let endpoints = {
     'uploads': '/api/v2/uploads',
     'status': '/api/v2/resource-service/execution-status',
     'exectionRequest': '/api/v2/executionrequest',
-    'facets': '/api/v2/facets'
+    'facets': '/api/v2/facets',
+    'metadata': '/api/v2/metadata'
 };
 
 const RESOURCES = 'resources';
@@ -69,6 +70,7 @@ const UPLOADS = 'uploads';
 const STATUS = 'status';
 const EXECUTIONREQUEST = 'exectionRequest';
 const FACETS = 'facets';
+const METADATA = 'metadata';
 
 export const setEndpoints = (data) => {
     endpoints = { ...endpoints, ...data };
@@ -926,6 +928,83 @@ export const getFacetItems = (customFilters) => {
         ).catch(() => []);
 };
 
+const checkRefOpenAPISchema = (json) => {
+    if (isArray(json)) {
+        return json.some((entry) => checkRefOpenAPISchema(entry));
+    }
+    if (isObject(json)) {
+        return Object.keys(json).some((key) => {
+            if (key === '$ref') {
+                return true;
+            }
+            return checkRefOpenAPISchema(json[key]);
+        });
+    }
+    return false;
+};
+
+const recursiveRefReplaceOpenAPISchema = (json, openAPI) => {
+    const _openAPI = openAPI || json;
+    if (isArray(json)) {
+        return json.map((entry) => recursiveRefReplaceOpenAPISchema(entry, _openAPI));
+    }
+    if (isObject(json)) {
+        const keys = Object.keys(json);
+        if (keys.includes('$ref')) {
+            const componentPath = (json.$ref || '').replace('#/', '').replace(/\//g, '.');
+            const component = get(_openAPI, componentPath);
+            return { ...component };
+        }
+        return keys.reduce((acc, key) => {
+            acc[key] = recursiveRefReplaceOpenAPISchema(json[key], _openAPI);
+            return acc;
+        }, {});
+    }
+    return json;
+};
+
+const parseOpenAPISchema = (json) => {
+    if (checkRefOpenAPISchema(json)) {
+        const result = recursiveRefReplaceOpenAPISchema(json);
+        return parseOpenAPISchema(result);
+    }
+    return json;
+};
+
+let metadataItemJSONSchema;
+export const getMetadataSchema = () => {
+    if (metadataItemJSONSchema) {
+        return Promise.resolve(metadataItemJSONSchema);
+    }
+    return axios.get(parseDevHostname(`${endpoints[METADATA]}/schema/`))
+        .then(({ data }) => {
+            const result = parseOpenAPISchema(data);
+            metadataItemJSONSchema = get(result, 'paths./.get.responses.200.content.application/json.schema.items');
+            return metadataItemJSONSchema;
+        });
+};
+
+export const getMetadataByPk = (pk) => {
+    return getMetadataSchema()
+        .then((schema) =>
+            axios.get(parseDevHostname(`${endpoints[METADATA]}/${pk}`))
+                .then(({ data }) => {
+                    const metadata = data;
+                    const uiSchema = getGeoNodeConfig('metadataUiSchema');
+                    return {
+                        schema,
+                        metadata,
+                        uiSchema
+                    };
+                })
+        );
+};
+
+export const updateMetadata = (pk, body) => {
+    return axios.patch(parseDevHostname(`${endpoints[METADATA]}/${pk}`), body)
+        .then(({ data }) => data);
+};
+
 export default {
     getEndpoints,
     getResources,
@@ -967,5 +1046,6 @@ export default {
     deleteExecutionRequest,
     getResourceByTypeAndByPk,
     getFacetItems,
-    getFacetItemsByFacetName
+    getFacetItemsByFacetName,
+    getMetadataByPk
 };

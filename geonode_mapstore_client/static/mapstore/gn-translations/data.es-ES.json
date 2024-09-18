@@ -418,7 +418,11 @@
             "approveResource": "Aprobar este recurso (utilizado por el flujo de trabajo avanzado)",
             "publishResource": "Publicar este recurso (utilizado por el flujo de trabajo avanzado)",
             "featureResource": "Agregar este recurso a los recursos destacados",
-            "advertiseResource": "Hacer que este recurso sea buscable"
+            "advertiseResource": "Hacer que este recurso sea buscable",
+            "metadataFor": "Metadatos para",
+            "metadataUpdateError": "No fue posible actualizar los metadatos",
+            "metadataNotFound": "No se encontraron metadatos para el recurso seleccionado",
+            "backToResource": "Volver al recurso"
         }
     }
 }
