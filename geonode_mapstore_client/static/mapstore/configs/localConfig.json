@@ -609,15 +609,13 @@
                                     "labelId": "gnviewer.editMetadata"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{'/datasets/' + (state('gnResourceData') || {}).alternate + '/style_upload'}",
-                                    "labelId": "gnviewer.styleUpload",
+                                    "type": "plugin",
+                                    "name": "OperationUploadStyle",
                                     "disableIf": "{!context.resourceHasPermission(state('gnResourceData'), 'change_dataset_style')}"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{'/datasets/' + (state('gnResourceData') || {}).alternate + '/metadata_upload'}",
-                                    "labelId": "gnviewer.metadataUpload",
+                                    "type": "plugin",
+                                    "name": "OperationUploadMetadata",
                                     "disableIf": "{state('gnResourceData').subtype === '3dtiles'}"
                                 }
                             ]
@@ -1214,6 +1212,86 @@
             },
             {
                 "name": "SidebarMenu"
+            },
+            {
+                "name": "Operation",
+                "cfg": {
+                    "id": "upload-style",
+                    "labelId": "gnviewer.styleUpload",
+                    "containerPosition": "header",
+                    "blocking": true,
+                    "iconName": "paint-brush",
+                    "titleMsgId": "gnviewer.uploadDatasetStyle",
+                    "source": "resource_file_upload",
+                    "api": {
+                        "upload": {
+                            "url": "{context.getEndpointUrl('upload')}",
+                            "maxParallelUploads": 1,
+                            "body": {
+                                "file": {
+                                    "base_file": "{context.getUploadMainFile}",
+                                    "dataset_title": "{context.get(state('gnResourceData'), 'alternate')}"
+                                }
+                            },
+                            "supportedFiles": "{context.getSupportedFilesByResourceType('dataset', { source: ['resource_style_upload'] })}"
+                        },
+                        "executionRequest": {
+                            "url": "{context.getEndpointUrl('executionrequest')}",
+                            "params": {
+                                "filter{source}": "resource_file_upload",
+                                "filter{name.endswith}": ".sld",
+                                "filter{action}": "import",
+                                "sort[]": "-created",
+                                "filter{geonode_resource}": "{context.get(state('gnResourceData'), 'pk')}"
+                            }
+                        }
+                    }
+                },
+                "override": {
+                    "ActionNavbar": {
+                        "name": "OperationUploadStyle"
+                    }
+                }
+            },
+            {
+                "name": "Operation",
+                "cfg": {
+                    "id": "upload-metadata",
+                    "labelId": "gnviewer.metadataUpload",
+                    "containerPosition": "header",
+                    "iconName": "file-code-o",
+                    "titleMsgId": "gnviewer.uploadDatasetMetadata",
+                    "blocking": true,
+                    "source": "resource_file_upload",
+                    "api": {
+                        "upload": {
+                            "url": "{context.getEndpointUrl('upload')}",
+                            "maxParallelUploads": 1,
+                            "body": {
+                                "file": {
+                                    "base_file": "{context.getUploadMainFile}",
+                                    "dataset_title": "{context.get(state('gnResourceData'), 'alternate')}"
+                                }
+                            },
+                            "supportedFiles": "{context.getSupportedFilesByResourceType('dataset', { source: ['resource_metadata_upload'] })}"
+                        },
+                        "executionRequest": {
+                            "url": "{context.getEndpointUrl('executionrequest')}",
+                            "params": {
+                                "filter{source}": "resource_file_upload",
+                                "filter{name.endswith}": ".xml",
+                                "filter{action}": "import",
+                                "sort[]": "-created",
+                                "filter{geonode_resource}": "{context.get(state('gnResourceData'), 'pk')}"
+                            }
+                        }
+                    }
+                },
+                "override": {
+                    "ActionNavbar": {
+                        "name": "OperationUploadMetadata"
+                    }
+                }
             }
         ],
         "dataset_edit_data_viewer": [
