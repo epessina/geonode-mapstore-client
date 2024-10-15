@@ -27,25 +27,10 @@ function OperationUpload({
 }) {
     const [forceRequests, setForceRequests] = useState(0);
     const [loadingRequests, setLoadingRequests] = useState(false);
-    const {
-        progress,
-        loading: uploadLoading,
-        errors,
-        completed,
-        cancelRequest,
-        uploadRequest
-    } = useUpload({
-        api: api.upload,
-        onComplete: () => {
-            setForceRequests(prevForceRequests => prevForceRequests + 1);
-            if (blocking) {
-                setLoadingRequests(true);
-            }
-        }
-    });
 
     const {
         requests,
+        uploadsToRequest,
         deleteRequest
     } = useExecutionRequest({
         api: api.executionRequest,
@@ -57,6 +42,25 @@ function OperationUpload({
             }
         }
     });
+
+    const {
+        progress,
+        loading: uploadLoading,
+        errors,
+        completed,
+        cancelRequest,
+        uploadRequest
+    } = useUpload({
+        api: api.upload,
+        onComplete: (responses, successfulUploads) => {
+            uploadsToRequest(successfulUploads);
+            setForceRequests(prevForceRequests => prevForceRequests + 1);
+            if (blocking) {
+                setLoadingRequests(true);
+            }
+        }
+    });
+
     function handleReload() {
         requests.forEach((request) => {
             deleteRequest(request.exec_id);

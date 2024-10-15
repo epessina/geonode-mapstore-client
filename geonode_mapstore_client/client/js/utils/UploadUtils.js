@@ -154,9 +154,9 @@ export const getUploadMainFile = ({ upload } = {}) => {
     return upload?.files?.[upload?.ext?.[0]];
 };
 
-export const getUploadFileName = ({ upload } = {}) => {
+export const getUploadFileName = ({ upload } = {}, remoteUrl) => {
     if (upload?.type === 'remote') {
-        return getFileNameAndExtensionFromUrl(upload.url)?.fileName || upload.url;
+        return remoteUrl ? upload.url : getFileNameAndExtensionFromUrl(upload.url)?.fileName || upload.url;
     }
     return upload?.files?.[upload?.ext?.[0]]?.name;
 };

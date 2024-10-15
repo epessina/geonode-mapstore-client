@@ -59,6 +59,17 @@ function UploadDataset({
     const [forceRequests, setForceRequests] = useState(0);
 
     const {
+        requests,
+        uploadsToRequest,
+        deleteRequest
+    } = useExecutionRequest({
+        api: api.executionRequest,
+        forceRequests,
+        refreshTime,
+        onRefresh: () => {}
+    });
+
+    const {
         progress,
         loading: uploadLoading,
         errors,
@@ -67,19 +78,10 @@ function UploadDataset({
         uploadRequest
     } = useUpload({
         api: api.upload,
-        onComplete: () => {
+        onComplete: (responses, successfulUploads) => {
+            uploadsToRequest(successfulUploads);
             setForceRequests(prevForceRequests => prevForceRequests + 1);
         }
-    });
-
-    const {
-        requests,
-        deleteRequest
-    } = useExecutionRequest({
-        api: api.executionRequest,
-        forceRequests,
-        refreshTime,
-        onRefresh: () => {}
     });
 
     return (
