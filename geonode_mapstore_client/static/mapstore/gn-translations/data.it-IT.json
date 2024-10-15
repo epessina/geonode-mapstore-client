@@ -432,7 +432,9 @@
             "uploadDatasetStyle": "Carica stile del dataset",
             "uploadDatasetMetadata": "Carica i metadati del dataset",
             "uploadName": "Nome",
-            "uploadCreated": "Data creazione"
+            "uploadCreated": "Data creazione",
+            "replaceDataset": "Sostituisci",
+            "replaceDatasetTitle": "Sostituisci dataset"
         }
     }
 }

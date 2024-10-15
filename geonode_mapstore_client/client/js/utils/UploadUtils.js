@@ -194,11 +194,6 @@ export const getMaxAllowedSizeByResourceType = (resourceType) => {
     return maxAllowedSize;
 };
 
-export const isTimeEnabled = () => {
-    const { timeEnabled } = getConfigProp('geoNodeSettings') || {};
-    return timeEnabled;
-};
-
 export const getSupportedFilesByResourceType = (resourceType, { source } = {}) => {
     if (resourceType === 'document') {
         const { allowedDocumentTypes } = getConfigProp('geoNodeSettings') || [];

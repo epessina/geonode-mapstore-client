@@ -430,7 +430,9 @@
             "uploadDatasetStyle": "Télécharger le style du jeu de données",
             "uploadDatasetMetadata": "Télécharger les métadonnées du jeu de données",
             "uploadName": "Nom",
-            "uploadCreated": "Créé"
+            "uploadCreated": "Créé",
+            "replaceDataset": "Remplacer",
+            "replaceDatasetTitle": "Remplacer l'ensemble de données"
         }
     }
 }

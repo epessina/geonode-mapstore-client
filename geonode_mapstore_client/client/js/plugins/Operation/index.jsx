@@ -66,7 +66,7 @@ import Message from '@mapstore/framework/components/I18N/Message';
  *              "body": {
  *                  "file": {
  *                      "base_file": "{context.getUploadMainFile}",
- *                      "dataset_title": "{context.get(state('gnResourceData'), 'alternate')}"
+ *                      "resource_pk": "{context.get(state('gnResourceData'), 'pk')}"
  *                  }
  *              }
  *          },
@@ -74,7 +74,7 @@ import Message from '@mapstore/framework/components/I18N/Message';
  *              "url": "{context.getEndpointUrl('executionrequest')}",
  *              "params": {
  *                  "filter{source}": "resource_file_upload",
- *                  "filter{name.endswith}": ".shp",
+ *                  "filter{name.endswith}": ".xml",
  *                  "sort[]": "-created",
  *                  "filter{geonode_resource}": "{context.get(state('gnResourceData'), 'pk')}"
  *              }

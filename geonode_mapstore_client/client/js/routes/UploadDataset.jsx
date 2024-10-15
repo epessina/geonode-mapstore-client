@@ -19,8 +19,7 @@ import {
     getUploadProperty,
     getSupportedFilesByResourceType,
     getMaxParallelUploads,
-    getMaxAllowedSizeByResourceType,
-    isTimeEnabled
+    getMaxAllowedSizeByResourceType
 } from '@js/utils/UploadUtils';
 import {
     getEndpointUrl,
@@ -38,11 +37,7 @@ function UploadDataset({
             body: {
                 file: {
                     'base_file': getUploadMainFile,
-                    'charset': 'UTF-8',
-                    'store_spatial_files': true,
-                    'time': isTimeEnabled() ? ({ upload }) => {
-                        return ['csv', 'shp'].includes(upload?.ext?.[0]) ? true : false;
-                    } : undefined
+                    'store_spatial_files': true
                 },
                 remote: {
                     'url': getUploadProperty('url'),

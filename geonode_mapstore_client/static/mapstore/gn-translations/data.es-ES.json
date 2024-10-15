@@ -429,7 +429,9 @@
             "uploadDatasetStyle": "Estilo de conjunto de datos de carga",
             "uploadDatasetMetadata": "Metadatos del conjunto de datos de carga",
             "uploadName": "Nombre",
-            "uploadCreated": "Creado"
+            "uploadCreated": "Creado",
+            "replaceDataset": "Reemplazar",
+            "replaceDatasetTitle": "Reemplazar conjunto de datos"
         }
     }
 }
