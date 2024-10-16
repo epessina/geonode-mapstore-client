@@ -1318,7 +1318,7 @@
                                     "resource_pk": "{context.get(state('gnResourceData'), 'pk')}",
                                     "base_file": "{context.getUploadMainFile}",
                                     "store_spatial_files": true,
-                                    "overwrite_existing_layer": "True"
+                                    "overwrite_existing_layer": true
                                 }
                             },
                             "supportedFiles": "{context.getSupportedFilesByResourceType('dataset', { source: ['upload'] })}"
