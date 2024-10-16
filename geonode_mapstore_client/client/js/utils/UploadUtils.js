@@ -264,7 +264,7 @@ export const getSupportedFilesByResourceType = (resourceType, { source } = {}) =
         {
             "id": "3dtiles",
             "label": "3D Tiles",
-            "required_ext": ["json"],
+            "required_ext": ["zip"],
             "source": ["upload"],
             "format": "vector"
         },

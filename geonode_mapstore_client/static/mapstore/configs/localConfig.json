@@ -620,7 +620,8 @@
                                 },
                                 {
                                     "type": "plugin",
-                                    "name": "OperationReplaceDataset"
+                                    "name": "OperationReplaceDataset",
+                                    "disableIf": "{state('gnResourceData').sourcetype === '3dtiles'}"
                                 }
                             ]
                         },
@@ -1307,6 +1308,7 @@
                     "titleMsgId": "gnviewer.replaceDatasetTitle",
                     "blocking": true,
                     "source": "upload",
+                    "pageReload": true,
                     "api": {
                         "upload": {
                             "url": "{context.getEndpointUrl('upload')}",
@@ -1316,7 +1318,7 @@
                                     "resource_pk": "{context.get(state('gnResourceData'), 'pk')}",
                                     "base_file": "{context.getUploadMainFile}",
                                     "store_spatial_files": true,
-                                    "overwrite_existing_layer": true
+                                    "overwrite_existing_layer": "True"
                                 }
                             },
                             "supportedFiles": "{context.getSupportedFilesByResourceType('dataset', { source: ['upload'] })}"

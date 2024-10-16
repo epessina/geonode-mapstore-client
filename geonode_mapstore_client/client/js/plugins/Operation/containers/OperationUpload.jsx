@@ -23,7 +23,8 @@ function OperationUpload({
     iconName = 'file',
     titleMsgId = "gnviewer.uploadFile",
     descriptionMsgId = 'gnviewer.dragAndDropFile',
-    refreshTime = 3000
+    refreshTime = 3000,
+    pageReload
 }) {
     const [forceRequests, setForceRequests] = useState(0);
     const [loadingRequests, setLoadingRequests] = useState(false);
@@ -65,7 +66,7 @@ function OperationUpload({
         requests.forEach((request) => {
             deleteRequest(request.exec_id);
         });
-        onReload(forceRequests === 0);
+        onReload(forceRequests === 0, pageReload);
         onSelect(undefined);
     }
     function handleClose() {

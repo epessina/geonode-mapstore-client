@@ -14,7 +14,8 @@ export const selectOperation = (selected) => ({
     selected
 });
 
-export const reloadOperation = (skip) => ({
+export const reloadOperation = (skip, pageReload) => ({
     type: RELOAD_OPERATION,
-    skip
+    skip,
+    pageReload
 });

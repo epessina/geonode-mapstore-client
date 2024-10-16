@@ -14,7 +14,11 @@ import { getResourceData } from '@js/selectors/resource';
 export const gnReloadOperation = (action$, { getState } = {}) =>
     action$.ofType(RELOAD_OPERATION)
         .filter(action => !action.skip)
-        .switchMap(() => {
+        .switchMap((action) => {
+            if (action.pageReload) {
+                window.location.reload();
+                return Observable.empty();
+            }
             const state = getState();
             const resource = getResourceData(state);
             return Observable.of(

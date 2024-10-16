@@ -32,6 +32,7 @@ import Message from '@mapstore/framework/components/I18N/Message';
  * @prop {string} titleMsgId title for the central section
  * @prop {string} descriptionMsgId description for the central section
  * @prop {string} source the operation source used in the upload process
+ * @prop {boolean} pageReload if true the page is reloaded after clicking on reload
  * @prop {object} api an object with the api configuration for upload and execution request
  * @prop {object} api.upload configuration for the upload process
  * @prop {string} api.upload.url upload endpoint
@@ -99,7 +100,8 @@ function Operation({
     iconName,
     titleMsgId,
     descriptionMsgId,
-    source
+    source,
+    pageReload
 }) {
 
     // open the import ui if a blocking execution is still running
@@ -127,6 +129,7 @@ function Operation({
             iconName={iconName}
             titleMsgId={titleMsgId}
             descriptionMsgId={descriptionMsgId}
+            pageReload={pageReload}
         />
     );
 }
