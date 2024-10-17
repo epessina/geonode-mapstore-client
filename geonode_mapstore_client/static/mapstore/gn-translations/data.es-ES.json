@@ -431,7 +431,11 @@
             "uploadName": "Nombre",
             "uploadCreated": "Creado",
             "replaceDataset": "Reemplazar",
-            "replaceDatasetTitle": "Reemplazar conjunto de datos"
+            "replaceDatasetTitle": "Reemplazar conjunto de datos",
+            "metadataFor": "Metadatos para",
+            "metadataUpdateError": "No fue posible actualizar los metadatos",
+            "metadataNotFound": "No se encontraron metadatos para el recurso seleccionado",
+            "backToResource": "Volver al recurso"
         }
     }
 }

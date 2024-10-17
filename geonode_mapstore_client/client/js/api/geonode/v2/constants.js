@@ -28,7 +28,8 @@ let endpoints = {
     'groups': '/api/v2/groups',
     'executionrequest': '/api/v2/executionrequest',
     'facets': '/api/v2/facets',
-    'upload': '/uploads/upload'
+    'upload': '/uploads/upload',
+    'metadata': '/api/v2/metadata'
 };
 
 export const RESOURCES = 'resources';
@@ -42,6 +43,7 @@ export const GROUPS = 'groups';
 export const EXECUTION_REQUEST = 'executionrequest';
 export const FACETS = 'facets';
 export const UPLOADS_UPLOAD = 'upload';
+export const METADATA = 'metadata';
 
 export const setEndpoints = (data) => {
     endpoints = { ...endpoints, ...data };

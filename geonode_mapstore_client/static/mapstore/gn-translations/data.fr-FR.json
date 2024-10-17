@@ -432,7 +432,11 @@
             "uploadName": "Nom",
             "uploadCreated": "Créé",
             "replaceDataset": "Remplacer",
-            "replaceDatasetTitle": "Remplacer l'ensemble de données"
+            "replaceDatasetTitle": "Remplacer l'ensemble de données",
+            "metadataFor": "Métadonnées pour",
+            "metadataUpdateError": "Il n'a pas été possible de mettre à jour les métadonnées",
+            "metadataNotFound": "Les métadonnées ne sont pas trouvées pour la ressource sélectionnée",
+            "backToResource": "Retour à la ressource"
         }
     }
 }

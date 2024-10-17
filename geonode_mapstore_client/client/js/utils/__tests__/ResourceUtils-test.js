@@ -711,7 +711,7 @@ describe('Test Resource Utils', () => {
             expect(icon).toBe('map');
             expect(canPreviewed(resource)).toBeTruthy();
             expect(name).toBe('Map');
-            expect(formatMetadataUrl(resource)).toBe('/maps/100/metadata');
+            expect(formatMetadataUrl(resource)).toBe('#/map/100/metadata');
         });
         it('test document of getResourceTypesInfo', () => {
             const {
@@ -731,7 +731,7 @@ describe('Test Resource Utils', () => {
             expect(canPreviewed(resource)).toBeTruthy();
             expect(hasPermission(resource)).toBeTruthy();
             expect(name).toBe('Document');
-            expect(formatMetadataUrl(resource)).toBe('/documents/100/metadata');
+            expect(formatMetadataUrl(resource)).toBe('#/document/100/metadata');
             expect(metadataPreviewUrl(resource)).toBe('/documents/100/metadata_detail?preview');
         });
         it('test geostory of getResourceTypesInfo', () => {
@@ -748,7 +748,7 @@ describe('Test Resource Utils', () => {
             expect(icon).toBe('book');
             expect(canPreviewed(resource)).toBeTruthy();
             expect(name).toBe('GeoStory');
-            expect(formatMetadataUrl(resource)).toBe('/apps/100/metadata');
+            expect(formatMetadataUrl(resource)).toBe('#/geostory/100/metadata');
         });
         it('test dashboard of getResourceTypesInfo', () => {
             const {
@@ -764,7 +764,7 @@ describe('Test Resource Utils', () => {
             expect(icon).toBe('dashboard');
             expect(canPreviewed(resource)).toBeTruthy();
             expect(name).toBe('Dashboard');
-            expect(formatMetadataUrl(resource)).toBe('/apps/100/metadata');
+            expect(formatMetadataUrl(resource)).toBe('#/dashboard/100/metadata');
         });
     });
     it('test isDocumentExternalSource', () => {

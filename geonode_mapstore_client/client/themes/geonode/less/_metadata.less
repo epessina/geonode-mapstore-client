@@ -1,0 +1,30 @@
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-metadata-header {
+        .background-color-var(@theme-vars[main-bg]);
+    }
+}
+
+// **************
+// Layout
+// **************
+
+.gn-metadata {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    .gn-metadata-container {
+        max-width: 1140px;
+        margin: auto;
+        padding: 2rem;
+    }
+    .gn-metadata-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+}

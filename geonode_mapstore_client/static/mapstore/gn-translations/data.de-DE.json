@@ -432,7 +432,11 @@
             "uploadName": "Name",
             "uploadCreated": "Erstellt",
             "replaceDataset": "Ersetzen",
-            "replaceDatasetTitle": "Datensatz ersetzen"
+            "replaceDatasetTitle": "Datensatz ersetzen",
+            "metadataFor": "Metadaten für",
+            "metadataUpdateError": "Die Metadaten konnten nicht aktualisiert werden",
+            "metadataNotFound": "Für die ausgewählte Ressource wurden keine Metadaten gefunden",
+            "backToResource": "Zurück zur Ressource"
         }
     }
 }

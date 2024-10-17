@@ -4611,6 +4611,11 @@
             {
                 "name": "MapViewersCatalog"
             }
-        ]
+        ],
+        "metadata": [
+            {
+                "name": "MetadataEditor"
+            }
+        ] 
     }
 }

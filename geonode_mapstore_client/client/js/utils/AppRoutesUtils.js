@@ -73,6 +73,12 @@ export const GEOSTORY_ROUTES = [{
 
 export const CATALOGUE_ROUTES = [
     {
+        name: 'metadata',
+        path: ['/metadata/:pk'],
+        component: appRouteComponentTypes.VIEWER,
+        shouldNotRequestResources: true
+    },
+    {
         name: 'dataset_viewer',
         path: [
             '/dataset/:subtype/:pk'
