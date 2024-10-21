@@ -433,7 +433,7 @@
             "uploadDatasetMetadata": "Carica i metadati del dataset",
             "uploadName": "Nome",
             "uploadCreated": "Data creazione",
-            "replaceDataset": "Sostituisci",
+            "replaceDataset": "Sostituisci Dataset",
             "replaceDatasetTitle": "Sostituisci dataset",
             "metadataFor": "Metadati per",
             "metadataUpdateError": "Non è stato possibile aggiornare i metadati",
