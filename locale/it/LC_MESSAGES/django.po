@@ -106,3 +106,6 @@ msgstr "Una valutazione è stata data a una GeoStory"
 #, python-format
 msgid "%s Type"
 msgstr "%s Tipo"
+
+msgid "All resources"
+msgstr "Tutte le risorse"
