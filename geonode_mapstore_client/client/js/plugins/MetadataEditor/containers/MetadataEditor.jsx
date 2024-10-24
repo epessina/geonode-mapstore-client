@@ -10,13 +10,15 @@ import React, { useState, useEffect } from 'react';
 import validator from '@rjsf/validator-ajv8';
 import Form from '@rjsf/core';
 import isEqual from 'lodash/isEqual';
-import { Alert, ButtonToolbar } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { getMetadataByPk, updateMetadata } from '@js/api/geonode/v2/metadata';
 import Button from '@js/components/Button';
 import Message from '@mapstore/framework/components/I18N/Message';
 import widgets from '../components/_widgets';
 import templates from '../components/_templates';
+import fields from '../components/_fields';
 import MainEventView from '@js/components/MainEventView';
+import InputControlWithDebounce from '@js/components/InputControlWithDebounce';
 
 function MetadataEditor({ pk, loaderComponent }) {
     const [metadata, setMetadata] = useState();
@@ -25,6 +27,7 @@ function MetadataEditor({ pk, loaderComponent }) {
     const [uiSchema, setUISchema] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [filterText, setFilterText] = useState('');
 
     useEffect(() => {
         if (pk) {
@@ -86,43 +89,56 @@ function MetadataEditor({ pk, loaderComponent }) {
     const pendingChanges = !isEqual(initialMetadata, metadata);
 
     return (
-        <div
-            className="gn-metadata"
-        >
-            <div className="gn-metadata-container">
-                <div className="gn-metadata-header">
-                    <div style={{ display: 'flex', padding: '1rem 0', alignItems: 'self-start' }}>
-                        <div style={{ flex: 1, fontSize: '1.5rem' }}>
-                            <Message msgId="gnviewer.metadataFor" /> "{metadata?.title}"
-                        </div>
-                        <ButtonToolbar>
-                            <Button
-                                variant="primary"
-                                disabled={!pendingChanges || updating}
-                                className={pendingChanges ? 'gn-pending-changes-icon' : ''}
-                                onClick={() => handleUpdate()}
-                            >
-                                <Message msgId="gnhome.update" />
-                            </Button>
-                        </ButtonToolbar>
-                    </div>
-                    {updatingError && <Alert bsStyle="danger" style={{ marginBottom: '0.25rem' }}>
-                        <Message msgId="gnviewer.metadataUpdateError" />
-                    </Alert>}
+        <div className="gn-metadata">
+            <div className="gn-metadata-header">
+                <div className="gn-metadata-title">
+                    <Message msgId="gnviewer.metadataFor" /> "{metadata?.title}"
                 </div>
+                <div className="gn-metadata-toolbar">
+                    <Button
+                        size="sm"
+                        variant="primary"
+                        disabled={!pendingChanges || updating}
+                        className={pendingChanges ? 'gn-pending-changes-icon' : ''}
+                        onClick={() => handleUpdate()}
+                    >
+                        <Message msgId="gnhome.update" />
+                    </Button>
+                    <InputControlWithDebounce
+                        value={filterText}
+                        onChange={(value) => setFilterText(value)}
+                    />
+                </div>
+                {updatingError && <Alert bsStyle="danger" style={{ margin: '0.25rem 0' }}>
+                    <Message msgId="gnviewer.metadataUpdateError" />
+                </Alert>}
+            </div>
+            <div className="gn-metadata-container">
                 <Form
                     liveValidate
+                    formContext={{
+                        filterText
+                    }}
                     schema={schema}
                     widgets={widgets}
                     uiSchema={uiSchema}
                     formData={metadata}
                     validator={validator}
                     templates={templates}
-                    onChange={({ formData }) => {
-                        handleChange(formData);
+                    fields={fields}
+                    experimental_defaultFormStateBehavior={{
+                        arrayMinItems: {
+                            populate: 'never',
+                            mergeExtraDefaults: false
+                        }
+                    }}
+                    onChange={({ formData }, id) => {
+                        if (id) {
+                            handleChange(formData);
+                        }
                     }}
                 >
-                    <></>
+                    <div />
                 </Form>
             </div>
         </div>

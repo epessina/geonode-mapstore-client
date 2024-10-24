@@ -7,34 +7,11 @@
  */
 
 import React from 'react';
-import ReactSelect from 'react-select';
+import DefaultSelectWidget from '@rjsf/core/lib/components/widgets/SelectWidget';
 
-function SelectWidget({
-    // schema,
-    // id,
-    options,
-    // required,
-    // disabled,
-    // readonly,
-    value,
-    multiple,
-    // autofocus,
-    // onChange,
-    // onBlur,
-    // onFocus,
-    // rawErrors = [],
-    placeholder
-}) {
+function SelectWidget(props) {
     return (
-        <ReactSelect
-            multi={multiple}
-            value={value}
-            placeholder={placeholder}
-            options={(options?.enumOptions || []).map((option) => ({ label: option.label, value: option.value }))}
-            onChange={() => {
-
-            }}
-        />
+        <DefaultSelectWidget {...props}/>
     );
 }
 

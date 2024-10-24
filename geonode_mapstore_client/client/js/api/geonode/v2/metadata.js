@@ -7,57 +7,10 @@
  */
 
 import axios from '@mapstore/framework/libs/ajax';
-import isArray from 'lodash/isArray';
-import isObject from 'lodash/isObject';
-import get from 'lodash/get';
 import {
     METADATA,
-    RESOURCES,
     getEndpointUrl
 } from './constants';
-
-const checkRefOpenAPISchema = (json) => {
-    if (isArray(json)) {
-        return json.some((entry) => checkRefOpenAPISchema(entry));
-    }
-    if (isObject(json)) {
-        return Object.keys(json).some((key) => {
-            if (key === '$ref') {
-                return true;
-            }
-            return checkRefOpenAPISchema(json[key]);
-        });
-    }
-    return false;
-};
-
-const recursiveRefReplaceOpenAPISchema = (json, openAPI) => {
-    const _openAPI = openAPI || json;
-    if (isArray(json)) {
-        return json.map((entry) => recursiveRefReplaceOpenAPISchema(entry, _openAPI));
-    }
-    if (isObject(json)) {
-        const keys = Object.keys(json);
-        if (keys.includes('$ref')) {
-            const componentPath = (json.$ref || '').replace('#/', '').replace(/\//g, '.');
-            const component = get(_openAPI, componentPath);
-            return { ...component };
-        }
-        return keys.reduce((acc, key) => {
-            acc[key] = recursiveRefReplaceOpenAPISchema(json[key], _openAPI);
-            return acc;
-        }, {});
-    }
-    return json;
-};
-
-const parseOpenAPISchema = (json) => {
-    if (checkRefOpenAPISchema(json)) {
-        const result = recursiveRefReplaceOpenAPISchema(json);
-        return parseOpenAPISchema(result);
-    }
-    return json;
-};
 
 const parseUiSchema = (properties) => {
     return Object.keys(properties).reduce((acc, key) => {
@@ -81,7 +34,7 @@ export const getMetadataSchema = () => {
     }
     return axios.get(getEndpointUrl(METADATA, '/schema/'))
         .then(({ data }) => {
-            const schema = parseOpenAPISchema(data);
+            const schema = data;
             metadataSchemas = {
                 schema: schema,
                 uiSchema: parseUiSchema(schema?.properties || {})
@@ -93,11 +46,9 @@ export const getMetadataSchema = () => {
 export const getMetadataByPk = (pk) => {
     return getMetadataSchema()
         .then(({ schema, uiSchema }) => {
-            // simulate metadata endpoint with resources
-            // to replace with metadata
-            return axios.get(getEndpointUrl(RESOURCES, `/${pk}`))
+            return axios.get(getEndpointUrl(METADATA, `/instance/${pk}/`))
                 .then(({ data }) => {
-                    const metadata = data?.resource;
+                    const metadata = data;
                     return {
                         schema,
                         uiSchema,
@@ -108,6 +59,6 @@ export const getMetadataByPk = (pk) => {
 };
 
 export const updateMetadata = (pk, body) => {
-    return axios.patch(getEndpointUrl(METADATA, `/${pk}`), body)
+    return axios.patch(getEndpointUrl(METADATA, `/instance/${pk}/`), body)
         .then(({ data }) => data);
 };

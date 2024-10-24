@@ -3,8 +3,27 @@
 // **************
 
 #gn-components-theme(@theme-vars) {
-    .gn-metadata-header {
+    .gn-metadata-header,
+    .gn-metadata-footer {
         .background-color-var(@theme-vars[main-bg]);
+    }
+    .gn-metadata {
+        .background-color-var(@theme-vars[main-bg]);
+        .rdw-editor-main {
+            .border-color-var(@theme-vars[main-border-color]);
+        }
+        .gn-metadata-groups .gn-metadata-group > .field-object .field-object {
+            .border-left-color-var(@theme-vars[main-border-color]);
+        }
+        .gn-metadata-list {
+            .border-right-color-var(@theme-vars[main-border-color]);
+        }
+        .gn-metadata-error .fa {
+            .color-var(@theme-vars[danger])
+        }
+    }
+    .page-metadata-viewer {
+        .background-color-var(@theme-vars[main-variant-bg]);
     }
 }
 
@@ -13,18 +32,113 @@
 // **************
 
 .gn-metadata {
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    .gn-metadata-container {
-        max-width: 1140px;
-        margin: auto;
-        padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 1140px;
+    margin: auto;
+    flex-direction: column;
+    .rjsf {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .gn-metadata-container,
+    .rjsf > .field-object {
+        position: relative;
+        flex: 1;
+        display: flex;
+        margin: 0;
     }
     .gn-metadata-header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        padding: 0 0.5rem;
+    }
+    .gn-metadata-title {
+        font-size: 1.5rem;
+        word-break: break-word;
+        padding: 0.5rem 0;
+    }
+    .gn-metadata-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0;
+        .form-control {
+            max-width: 400px;
+        }
+    }
+    textarea.form-control {
+        resize: none;
+    }
+    .rdw-editor-main {
+        border: 1px solid transparent;
+    }
+    .rdw-embedded-modal {
+        height: auto !important;
+    }
+    .field-object {
+        legend {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+    }
+    .gn-metadata-layout {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+    .gn-metadata-list {
+        position: relative;
+        height: 100%;
+        overflow: auto;
+        padding: 0.5rem;
+        margin: 0;
+        list-style: none;
+        border-right: 1px solid transparent;
+        min-width: 250px;
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li {
+                padding: 0;
+                button {
+                    padding-left: 1.75rem;
+                }
+            }
+        }
+        button {
+            width: 100%;
+            text-align: left;
+            box-shadow: none;
+        }
+    }
+    .gn-metadata-groups {
+        position: relative;
+        padding: 0.5rem;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        flex: 1;
+        .gn-metadata-group-title {
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+        }
+        .gn-metadata-group {
+            max-width: 60ch;
+            & > .field-object .field-object {
+                padding-left: 1rem;
+                border-left: 1px solid transparent;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .gn-metadata-error {
+        background-color: fade(@gn-danger, 25);
     }
 }

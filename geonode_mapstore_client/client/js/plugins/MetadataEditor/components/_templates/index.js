@@ -6,9 +6,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import LayoutObjectFieldTemplate from './LayoutObjectFieldTemplate';
+import ObjectFieldTemplate from './ObjectFieldTemplate';
 
 export default {
-    ObjectFieldTemplate: LayoutObjectFieldTemplate,
+    ObjectFieldTemplate,
     ErrorListTemplate: () => null
 };

@@ -6,12 +6,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Editor } from 'react-draft-wysiwyg';
+import React, { lazy, Suspense } from 'react';
+import DefaultTextareaWidget from '@rjsf/core/lib/components/widgets/TextareaWidget';
+const RichTextEditor = lazy(() => import('./RichTextEditor'));
 
-function TextareaWidget() {
-    return (<Editor />);
+function TextareaWidget(props) {
+    const {
+        id,
+        options = {},
+        value,
+        onChange
+    } = props;
+    if (options?.['geonode-ui:richTextEditor']) {
+        return (
+            <Suspense fallback={null}>
+                <RichTextEditor
+                    id={id}
+                    value={value}
+                    onChange={onChange}
+                />
+            </Suspense>
+        );
+    }
+    return (<DefaultTextareaWidget {...props}/>);
 }
 
 export default TextareaWidget;

@@ -6,10 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import SelectWidget from './SelectWidget';
-import TextareaWidget from './TextareaWidget';
+import ArrayField from './ArrayField';
 
 export default {
-    SelectWidget,
-    TextareaWidget
+    ArrayField: ArrayField
 };
