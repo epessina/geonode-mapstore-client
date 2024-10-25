@@ -1,0 +1,36 @@
+<ul class="gn-metadata-list">
+    <li><a href="#{{title_id}}" class="btn btn-xs btn-default">Metadata: {{title}}</a></li>
+    {% for group_key, metadata in metadata_groups.items %}
+        <li class="gn-metadata-list-group">
+            <button class="btn btn-xs btn-default">
+                <span class="glyphicon glyphicon-bottom"></span>
+                {{group_key}}
+            </button>
+            <ul>
+                {% for name, property in metadata.items %}
+                    <li><a href="#{{prefix}}_{{name}}__label" class="btn btn-xs btn-default">{{ property.schema.title|default:name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+<script type="text/javascript">
+    (function() {
+        window.addEventListener('DOMContentLoaded', function() {
+            const groupNodes = document.querySelectorAll('.gn-metadata-list-group');
+            console.log(groupNodes);
+            [...groupNodes].forEach((groupNode) => {
+                const groupButton = groupNode.querySelector('button');
+                const list = groupNode.querySelector('ul');
+                if (groupButton && list) {
+                    const icon = groupButton.querySelector('.glyphicon');
+                    groupButton.onclick = () => {
+                        const enabled = list.style.display !== 'none';
+                        list.style.display = enabled ? 'none' : 'block';
+                        icon.setAttribute('class', enabled ? 'glyphicon glyphicon-next' : 'glyphicon glyphicon-bottom')
+                    };
+                }
+            });
+        });
+    })();
+</script>

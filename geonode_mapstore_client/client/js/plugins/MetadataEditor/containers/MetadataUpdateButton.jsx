@@ -1,0 +1,54 @@
+/*
+ * Copyright 2024, GeoSolutions Sas.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import React from 'react';
+import { updateMetadata } from '@js/api/geonode/v2/metadata';
+import Message from '@mapstore/framework/components/I18N/Message';
+import Button from '@js/components/Button';
+
+function MetadataUpdateButton({
+    pendingChanges,
+    size,
+    variant,
+    pk,
+    metadata,
+    updating,
+    setUpdating,
+    setUpdateError,
+    setInitialMetadata
+}) {
+
+    function handleUpdate() {
+        setUpdating(true);
+        setUpdateError(false);
+        updateMetadata(pk, metadata)
+            .then(() => {
+                setInitialMetadata(metadata);
+            })
+            .catch(() => {
+                setUpdateError(true);
+            })
+            .finally(() => {
+                setUpdating(false);
+            });
+    }
+
+    return (
+        <Button
+            size={size}
+            variant={variant}
+            disabled={!pendingChanges || updating}
+            className={pendingChanges ? 'gn-pending-changes-icon' : ''}
+            onClick={() => handleUpdate()}
+        >
+            <Message msgId="gnhome.update" />
+        </Button>
+    );
+}
+
+export default MetadataUpdateButton;

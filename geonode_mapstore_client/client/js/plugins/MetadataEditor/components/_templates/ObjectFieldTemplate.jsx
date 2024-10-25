@@ -12,6 +12,15 @@ import DefaultObjectFieldTemplate from '@rjsf/core/lib/components/templates/Obje
 import Button from '@js/components/Button';
 import { Glyphicon } from 'react-bootstrap';
 import FaIcon from '@js/components/FaIcon';
+import Message from '@mapstore/framework/components/I18N/Message';
+import InputControlWithDebounce from '@js/components/InputControlWithDebounce';
+
+const scrollIntoView = (id) => {
+    const node = document.querySelector(`[for=${id}]`) || document.getElementById(id);
+    if (node) {
+        node.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+};
 
 function MetadataGroup({
     idSchema,
@@ -35,13 +44,7 @@ function MetadataGroup({
                                 <Button
                                     size="xs"
                                     className={property.error ? 'gn-metadata-error' : ''}
-                                    onClick={() => {
-                                        const id = idSchema[property.name]?.$id;
-                                        const node = document.querySelector(`[for=${id}]`) || document.getElementById(id);
-                                        if (node) {
-                                            node.scrollIntoView({ behavior: "smooth", block: "start" });
-                                        }
-                                    }}>
+                                    onClick={() => scrollIntoView(idSchema[property.name]?.$id)}>
                                     {property.title}
                                     {property.error ?  <>{' '}<FaIcon name="exclamation"/></> : null}
                                 </Button>
@@ -61,7 +64,12 @@ function RootMetadata({
     errorSchema,
     formContext
 }) {
-    const { filterText } = formContext;
+    const {
+        title: metadataTitle
+    } = formContext;
+
+    const [filterText, setFilterText] = useState('');
+
     const groups = properties.reduce((acc, property) => {
 
         const title = schema?.properties?.[property.name]?.title || property.name;
@@ -80,9 +88,17 @@ function RootMetadata({
         };
     }, {});
 
+    const metadataTitleId = 'gn-metadata-title';
+
     return (
         <div className="gn-metadata-layout">
             <ul className="gn-metadata-list">
+                <InputControlWithDebounce
+                    placeholder="gnviewer.filterMetadata"
+                    value={filterText}
+                    onChange={(value) => setFilterText(value)}
+                />
+                {metadataTitle ? <li><Button size="xs" onClick={() => scrollIntoView(metadataTitleId)}><Message msgId="gnviewer.metadataFor" /> {metadataTitle}</Button></li> : null}
                 {Object.keys(groups)
                     .filter(groupKey => groups[groupKey].length > 0)
                     .map((groupKey) => {
@@ -99,6 +115,9 @@ function RootMetadata({
                     })}
             </ul>
             <div className="gn-metadata-groups">
+                {metadataTitle ? <div id={metadataTitleId} className="gn-metadata-title">
+                    <Message msgId="gnviewer.metadataFor" /> {metadataTitle}
+                </div> : null}
                 {Object.keys(groups)
                     .filter(groupKey => groups[groupKey].length > 0)
                     .map((groupKey, idx) => {

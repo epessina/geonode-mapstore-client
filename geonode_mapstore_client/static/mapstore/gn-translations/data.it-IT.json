@@ -435,10 +435,10 @@
             "uploadCreated": "Data creazione",
             "replaceDataset": "Sostituisci Dataset",
             "replaceDatasetTitle": "Sostituisci dataset",
-            "metadataFor": "Metadati per",
+            "metadataFor": "Metadati:",
             "metadataUpdateError": "Non è stato possibile aggiornare i metadati",
             "metadataNotFound": "Metadati non disponibili per la risorsa selezionata",
-            "backToResource": "Ritorna alla risorsa"
+            "filterMetadata": "Filtra per nome..."
         }
     }
 }

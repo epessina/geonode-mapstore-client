@@ -9,6 +9,7 @@
 import axios from '@mapstore/framework/libs/ajax';
 import {
     METADATA,
+    RESOURCES,
     getEndpointUrl
 } from './constants';
 
@@ -46,19 +47,25 @@ export const getMetadataSchema = () => {
 export const getMetadataByPk = (pk) => {
     return getMetadataSchema()
         .then(({ schema, uiSchema }) => {
-            return axios.get(getEndpointUrl(METADATA, `/instance/${pk}/`))
-                .then(({ data }) => {
-                    const metadata = data;
+            const resourceProperties = ['pk', 'title', 'detail_url', 'perms'];
+            return Promise.all([
+                axios.get(getEndpointUrl(METADATA, `/instance/${pk}/`)),
+                axios.get(getEndpointUrl(RESOURCES, `/${pk}/?exclude[]=*&${resourceProperties.map(value => `include[]=${value}`).join('&')}`))
+            ])
+                .then((response) => {
+                    const metadata = response?.[0]?.data || {};
+                    const resource = response?.[1]?.data?.resource || {};
                     return {
                         schema,
                         uiSchema,
-                        metadata
+                        metadata,
+                        resource
                     };
                 });
         });
 };
 
 export const updateMetadata = (pk, body) => {
-    return axios.patch(getEndpointUrl(METADATA, `/instance/${pk}/`), body)
+    return axios.put(getEndpointUrl(METADATA, `/instance/${pk}/`), body)
         .then(({ data }) => data);
 };

@@ -574,9 +574,8 @@
                                     "name": "DetailViewerButton"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{context.getMetadataDetailUrl(state('gnResourceData'))}",
-                                    "labelId": "gnviewer.viewMetadata"
+                                    "type": "plugin",
+                                    "name": "MetadataViewer"
                                 },
                                 {
                                     "type": "link",
@@ -1339,6 +1338,9 @@
                         "name": "OperationReplaceDataset"
                     }
                 }
+            },
+            {
+                "name": "MetadataViewer"
             }
         ],
         "dataset_edit_data_viewer": [
@@ -1650,9 +1652,8 @@
                                     "name": "DetailViewerButton"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{context.getMetadataDetailUrl(state('gnResourceData'))}",
-                                    "labelId": "gnviewer.viewMetadata"
+                                    "type": "plugin",
+                                    "name": "MetadataViewer"
                                 }
                             ]
                         },
@@ -2331,6 +2332,9 @@
                 "cfg": {
                     "wrap": true
                 }
+            },
+            {
+                "name": "MetadataViewer"
             }
         ],
         "geostory_viewer": [
@@ -2399,9 +2403,8 @@
                                     "name": "DetailViewerButton"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{context.getMetadataDetailUrl(state('gnResourceData'))}",
-                                    "labelId": "gnviewer.viewMetadata"
+                                    "type": "plugin",
+                                    "name": "MetadataViewer"
                                 }
                             ]
                         },
@@ -2674,6 +2677,9 @@
             },
             {
                 "name": "Sync"
+            },
+            {
+                "name": "MetadataViewer"
             }
         ],
         "document_viewer": [
@@ -2736,9 +2742,8 @@
                                     "name": "DetailViewerButton"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{context.getMetadataDetailUrl(state('gnResourceData'))}",
-                                    "labelId": "gnviewer.viewMetadata"
+                                    "type": "plugin",
+                                    "name": "MetadataViewer"
                                 }
                             ]
                         },
@@ -2946,6 +2951,9 @@
             },
             {
                 "name": "MediaViewer"
+            },
+            {
+                "name": "MetadataViewer"
             }
         ],
         "dashboard_viewer": [
@@ -3014,9 +3022,8 @@
                                     "name": "DetailViewerButton"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{context.getMetadataDetailUrl(state('gnResourceData'))}",
-                                    "labelId": "gnviewer.viewMetadata"
+                                    "type": "plugin",
+                                    "name": "MetadataViewer"
                                 }
                             ]
                         },
@@ -3282,6 +3289,9 @@
             },
             {
                 "name": "Notifications"
+            },
+            {
+                "name": "MetadataViewer"
             }
         ],
         "map_viewer_mobile": [
@@ -4380,9 +4390,8 @@
                                     "name": "DetailViewerButton"
                                 },
                                 {
-                                    "type": "link",
-                                    "href": "{context.getMetadataDetailUrl(state('gnResourceData'))}",
-                                    "labelId": "gnviewer.viewMetadata"
+                                    "type": "plugin",
+                                    "name": "MetadataViewer"
                                 }
                             ]
                         },
@@ -4610,11 +4619,37 @@
             },
             {
                 "name": "MapViewersCatalog"
+            },
+            {
+                "name": "MetadataViewer"
             }
         ],
         "metadata": [
             {
+                "name": "ActionNavbar",
+                "cfg": {
+                    "containerPosition": "header",
+                    "leftMenuItems": [
+                        {
+                            "type": "plugin",
+                            "name": "MetadataEditorBackTo"
+                        },
+                        {
+                            "type": "plugin",
+                            "name": "MetadataEditor"
+                        },
+                        {
+                            "type": "plugin",
+                            "name": "MetadataViewer"
+                        }
+                    ]
+                }
+            },
+            {
                 "name": "MetadataEditor"
+            },
+            {
+                "name": "MetadataViewer"
             }
         ] 
     }

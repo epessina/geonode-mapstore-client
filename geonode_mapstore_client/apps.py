@@ -13,7 +13,7 @@ import os
 from django.views.generic import TemplateView
 from django.utils.translation import gettext_lazy as _
 from django.apps import apps, AppConfig as BaseAppConfig
-
+from . import views
 
 def run_setup_hooks(*args, **kwargs):
     from geonode.urls import urlpatterns
@@ -83,6 +83,8 @@ def run_setup_hooks(*args, **kwargs):
                 template_name="geonode-mapstore-client/catalogue.html"
             ),
         ),
+        re_path(r"^metadata/(?P<pk>[^/]*)$", views.metadata, name='metadata'),
+        re_path(r"^metadata/(?P<pk>[^/]*)/embed$", views.metadata_embed, name='metadata'),
         # required, otherwise will raise no-lookup errors to be analysed
         re_path(r"^api/v2/", include(router.urls)),
     ]

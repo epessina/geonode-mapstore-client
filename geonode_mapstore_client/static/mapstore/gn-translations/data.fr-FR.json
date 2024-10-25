@@ -433,10 +433,10 @@
             "uploadCreated": "Créé",
             "replaceDataset": "Remplacer L'Ensemble De Données",
             "replaceDatasetTitle": "Remplacer l'ensemble de données",
-            "metadataFor": "Métadonnées pour",
+            "metadataFor": "Métadonnées:",
             "metadataUpdateError": "Il n'a pas été possible de mettre à jour les métadonnées",
             "metadataNotFound": "Les métadonnées ne sont pas trouvées pour la ressource sélectionnée",
-            "backToResource": "Retour à la ressource"
+            "filterMetadata": "Filtrer par nom..."
         }
     }
 }

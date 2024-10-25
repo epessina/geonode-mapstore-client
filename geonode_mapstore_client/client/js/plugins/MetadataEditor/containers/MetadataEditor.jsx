@@ -6,28 +6,35 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import validator from '@rjsf/validator-ajv8';
 import Form from '@rjsf/core';
-import isEqual from 'lodash/isEqual';
 import { Alert } from 'react-bootstrap';
-import { getMetadataByPk, updateMetadata } from '@js/api/geonode/v2/metadata';
-import Button from '@js/components/Button';
+import { getMetadataByPk } from '@js/api/geonode/v2/metadata';
 import Message from '@mapstore/framework/components/I18N/Message';
 import widgets from '../components/_widgets';
 import templates from '../components/_templates';
 import fields from '../components/_fields';
 import MainEventView from '@js/components/MainEventView';
-import InputControlWithDebounce from '@js/components/InputControlWithDebounce';
+import MainLoader from '@js/components/MainLoader';
 
-function MetadataEditor({ pk, loaderComponent }) {
-    const [metadata, setMetadata] = useState();
-    const [initialMetadata, setInitialMetadata] = useState();
-    const [schema, setSchema] = useState();
-    const [uiSchema, setUISchema] = useState();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [filterText, setFilterText] = useState('');
+function MetadataEditor({
+    pk,
+    loading,
+    error,
+    metadata,
+    schema,
+    uiSchema,
+    updateError,
+    setLoading,
+    setError,
+    setUISchema,
+    setSchema,
+    setMetadata,
+    setInitialMetadata,
+    setUpdateError,
+    setResource
+}) {
 
     useEffect(() => {
         if (pk) {
@@ -39,6 +46,7 @@ function MetadataEditor({ pk, loaderComponent }) {
                     setSchema(payload.schema);
                     setMetadata(payload.metadata);
                     setInitialMetadata(payload.metadata);
+                    setResource(payload.resource);
                 })
                 .catch(() => {
                     setError(true);
@@ -49,33 +57,13 @@ function MetadataEditor({ pk, loaderComponent }) {
         }
     }, [pk]);
 
-    const [updating, setUpdating] = useState(false);
-    const [updatingError, setUpdatingError] = useState(false);
-
-    function handleUpdate() {
-        setUpdating(true);
-        setUpdatingError(false);
-        updateMetadata(pk, metadata)
-            .then(() => {
-                setInitialMetadata(metadata);
-            })
-            .catch(() => {
-                setUpdatingError(true);
-            })
-            .finally(() => {
-                setUpdating(false);
-            });
-    }
-
     function handleChange(formData) {
-        setUpdatingError(false);
+        setUpdateError(false);
         setMetadata(formData);
     }
 
-    const Loader = loaderComponent;
-
-    if (loading && Loader) {
-        return (<Loader />);
+    if (loading) {
+        return (<MainLoader />);
     }
 
     if (error) {
@@ -86,30 +74,10 @@ function MetadataEditor({ pk, loaderComponent }) {
         return null;
     }
 
-    const pendingChanges = !isEqual(initialMetadata, metadata);
-
     return (
         <div className="gn-metadata">
             <div className="gn-metadata-header">
-                <div className="gn-metadata-title">
-                    <Message msgId="gnviewer.metadataFor" /> "{metadata?.title}"
-                </div>
-                <div className="gn-metadata-toolbar">
-                    <Button
-                        size="sm"
-                        variant="primary"
-                        disabled={!pendingChanges || updating}
-                        className={pendingChanges ? 'gn-pending-changes-icon' : ''}
-                        onClick={() => handleUpdate()}
-                    >
-                        <Message msgId="gnhome.update" />
-                    </Button>
-                    <InputControlWithDebounce
-                        value={filterText}
-                        onChange={(value) => setFilterText(value)}
-                    />
-                </div>
-                {updatingError && <Alert bsStyle="danger" style={{ margin: '0.25rem 0' }}>
+                {updateError && <Alert bsStyle="danger" style={{ margin: '0.25rem 0' }}>
                     <Message msgId="gnviewer.metadataUpdateError" />
                 </Alert>}
             </div>
@@ -117,7 +85,7 @@ function MetadataEditor({ pk, loaderComponent }) {
                 <Form
                     liveValidate
                     formContext={{
-                        filterText
+                        title: metadata?.title
                     }}
                     schema={schema}
                     widgets={widgets}
@@ -137,9 +105,7 @@ function MetadataEditor({ pk, loaderComponent }) {
                             handleChange(formData);
                         }
                     }}
-                >
-                    <div />
-                </Form>
+                />
             </div>
         </div>
     );
