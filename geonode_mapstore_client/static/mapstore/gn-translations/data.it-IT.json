@@ -438,7 +438,8 @@
             "metadataFor": "Metadati:",
             "metadataUpdateError": "Non è stato possibile aggiornare i metadati",
             "metadataNotFound": "Metadati non disponibili per la risorsa selezionata",
-            "filterMetadata": "Filtra per nome..."
+            "filterMetadata": "Filtra per nome...",
+            "noMetadataFound": "Nessun metadato trovato..."
         }
     }
 }

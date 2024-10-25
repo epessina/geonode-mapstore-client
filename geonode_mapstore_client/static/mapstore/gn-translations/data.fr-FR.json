@@ -436,7 +436,8 @@
             "metadataFor": "Métadonnées:",
             "metadataUpdateError": "Il n'a pas été possible de mettre à jour les métadonnées",
             "metadataNotFound": "Les métadonnées ne sont pas trouvées pour la ressource sélectionnée",
-            "filterMetadata": "Filtrer par nom..."
+            "filterMetadata": "Filtrer par nom...",
+            "noMetadataFound": "Aucune métadonnée trouvée..."
         }
     }
 }

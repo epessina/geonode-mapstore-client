@@ -1,6 +1,22 @@
 
 from django.shortcuts import render
 from django.utils.translation.trans_real import get_language_from_request
+from django.utils import formats
+from dateutil import parser
+
+def _parse_value(value, schema):
+    schema_type = schema.get('type')
+    format = schema.get('format')
+    if schema_type == 'string' and format in ['date-time']:
+        if type(value) == str:
+            return formats.date_format(parser.parse(value), "DATETIME_FORMAT")
+        return formats.date_format(value, "DATETIME_FORMAT")
+    if schema_type == 'string':
+        if 'oneOf' in schema:
+            for option in schema.get('oneOf'):
+                if option.get('const') == value:
+                    return option.get('title')
+    return value
 
 def _parse_schema_instance(instance, schema):
     metadata = {}
@@ -13,7 +29,7 @@ def _parse_schema_instance(instance, schema):
             if property_schema['type'] == 'object':
                 metadata[key]['value'] = _parse_schema_instance(instance[key], property_schema['properties'])
             else:
-                metadata[key]['value'] = instance[key]
+                metadata[key]['value'] = _parse_value(instance[key], property_schema)
             metadata[key]['schema'] = property_schema
     return metadata
 

@@ -22,7 +22,7 @@ const scrollIntoView = (id) => {
     }
 };
 
-function MetadataGroup({
+function MetadataGroupList({
     idSchema,
     title,
     group,
@@ -89,6 +89,7 @@ function RootMetadata({
     }, {});
 
     const metadataTitleId = 'gn-metadata-title';
+    const emptyMetadata = !Object.keys(groups).some(groupKey => groups[groupKey].length > 0);
 
     return (
         <div className="gn-metadata-layout">
@@ -104,7 +105,7 @@ function RootMetadata({
                     .map((groupKey) => {
                         const group = groups[groupKey];
                         return (
-                            <MetadataGroup
+                            <MetadataGroupList
                                 key={groupKey}
                                 idSchema={idSchema}
                                 title={groupKey}
@@ -118,6 +119,7 @@ function RootMetadata({
                 {metadataTitle ? <div id={metadataTitleId} className="gn-metadata-title">
                     <Message msgId="gnviewer.metadataFor" /> {metadataTitle}
                 </div> : null}
+                {emptyMetadata ? <div className="field"><Message msgId="gnviewer.noMetadataFound" /></div> : null}
                 {Object.keys(groups)
                     .filter(groupKey => groups[groupKey].length > 0)
                     .map((groupKey, idx) => {

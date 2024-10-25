@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import validator from '@rjsf/validator-ajv8';
 import Form from '@rjsf/core';
 import { Alert } from 'react-bootstrap';
@@ -33,8 +33,11 @@ function MetadataEditor({
     setMetadata,
     setInitialMetadata,
     setUpdateError,
-    setResource
+    setResource,
+    updating
 }) {
+
+    const init = useRef(false);
 
     useEffect(() => {
         if (pk) {
@@ -103,10 +106,20 @@ function MetadataEditor({
                     onChange={({ formData }, id) => {
                         if (id) {
                             handleChange(formData);
+                        } else if (!init.current) {
+                            // initially we need to create a metadata copy to trigger validation
+                            // the id is missing on mount
+                            const refreshedMetadata = {...metadata};
+                            setMetadata(refreshedMetadata);
+                            setInitialMetadata(refreshedMetadata);
+                            init.current = true;
                         }
                     }}
-                />
+                >
+                    <></>
+                </Form>
             </div>
+            {updating ? <MainLoader style={{ opacity: 0.5 }} /> : null}
         </div>
     );
 }

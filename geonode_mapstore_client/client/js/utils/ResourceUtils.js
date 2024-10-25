@@ -336,9 +336,7 @@ export const getResourceTypesInfo = () => ({
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         name: 'Dataset',
         formatMetadataUrl: (resource) => `#/metadata/${resource.pk}`,
-        formatMetadataDetailUrl: (resource) => isDefaultDatasetSubtype(resource?.subtype)
-            ? `/datasets/${resource.store ? resource.store + ":" : ''}${resource.alternate}/metadata_detail`
-            : `/resources/${resource.pk}/metadata_detail`
+        formatMetadataDetailUrl: (resource) => `/metadata/${resource.pk}`
     },
     [ResourceTypes.MAP]: {
         icon: 'map',
@@ -349,7 +347,7 @@ export const getResourceTypesInfo = () => ({
         })),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         formatMetadataUrl: (resource) => `#/metadata/${resource.pk}`,
-        formatMetadataDetailUrl: (resource) => `/maps/${resource.pk}/metadata_detail`
+        formatMetadataDetailUrl: (resource) => `/metadata/${resource.pk}`
     },
     [ResourceTypes.DOCUMENT]: {
         icon: 'file',
@@ -359,8 +357,8 @@ export const getResourceTypesInfo = () => ({
         formatEmbedUrl: (resource) => isDocumentExternalSource(resource) ? undefined : resource?.embed_url && parseDevHostname(resource.embed_url),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         formatMetadataUrl: (resource) => `#/metadata/${resource.pk}`,
-        formatMetadataDetailUrl: (resource) => `/documents/${resource.pk}/metadata_detail`,
-        metadataPreviewUrl: (resource) => `/documents/${resource.pk}/metadata_detail?preview`
+        formatMetadataDetailUrl: (resource) => `/metadata/${resource.pk}`,
+        metadataPreviewUrl: (resource) => `/metadata/${resource.pk}/embed`
     },
     [ResourceTypes.GEOSTORY]: {
         icon: 'book',
@@ -369,7 +367,7 @@ export const getResourceTypesInfo = () => ({
         formatEmbedUrl: (resource) => resource?.embed_url && parseDevHostname(resource.embed_url),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         formatMetadataUrl: (resource) => `#/metadata/${resource.pk}`,
-        formatMetadataDetailUrl: (resource) => `/apps/${resource.pk}/metadata_detail`
+        formatMetadataDetailUrl: (resource) => `/metadata/${resource.pk}`
     },
     [ResourceTypes.DASHBOARD]: {
         icon: 'dashboard',
@@ -378,7 +376,7 @@ export const getResourceTypesInfo = () => ({
         formatEmbedUrl: (resource) => resource?.embed_url && parseDevHostname(resource.embed_url),
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         formatMetadataUrl: (resource) => `#/metadata/${resource.pk}`,
-        formatMetadataDetailUrl: (resource) => `/apps/${resource.pk}/metadata_detail`
+        formatMetadataDetailUrl: (resource) => `/metadata/${resource.pk}`
     },
     [ResourceTypes.VIEWER]: {
         icon: 'cogs',
@@ -387,7 +385,7 @@ export const getResourceTypesInfo = () => ({
         formatEmbedUrl: () => false,
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         formatMetadataUrl: (resource) => `#/metadata/${resource.pk}`,
-        formatMetadataDetailUrl: (resource) => `/apps/${resource.pk}/metadata_detail`
+        formatMetadataDetailUrl: (resource) => `/metadata/${resource.pk}`
     }
 });
 
