@@ -1,50 +1,7 @@
-
+<dl>
 {% for name, property in metadata.items %}
-    <div class="form-group field field-{{property.schema.type}}">
-        <label id="{{prefix}}_{{name}}__label" class="control-label" for="{{prefix}}_{{name}}">
-            <a href="#{{prefix}}_{{name}}__label"><i class="fa fa-link"></i></a>
-            {{ property.schema.title|default:name }}
-        </label>
-        {% if property.schema.description %}
-        <p id="{{prefix}}_{{name}}__description" class="field-description">
-            {{property.schema.description}}
-        </p>
-        {% endif %}
-        {% if property.schema.type == 'object' %}
-            <div class="gn-metadata-group-value" id="{{prefix}}_{{name}}">
-                {%with prefix=""|add:prefix|add:'_'|add:name metadata=property.value template_name="geonode-mapstore-client/snippets/metadata_fields.html" %}
-                   {%include template_name %}
-                {%endwith%}
-            </div>
-        {% elif property.schema.type == 'array' %}
-            <div class="gn-metadata-group-value" id="{{prefix}}_{{name}}">
-                {% if property.schema.items.type == 'object' %}
-                    <table class="table">
-                        <thead>
-                            {% for entry in property.schema.items.properties %}
-                                <th>{{entry}}</th>
-                            {% endfor %}
-                        </thead>
-                        <tbody>
-                            {% for entry in property.value %}
-                                <tr>
-                                {% for key, val in entry.items %}
-                                    <td>{{val}}</td>
-                                {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% else %}
-                    {% for entry in property.value %}
-                        {{entry}}
-                    {% endfor %}
-                {% endif %}
-            </div>
-        {% else %}
-            <div class="gn-metadata-group-value" id="{{prefix}}_{{name}}">
-                {{property.value}}
-            </div>
-        {% endif %}
-    </div>
+    {% block property %}
+        {% include 'geonode-mapstore-client/snippets/metadata_field.html' with prefix=prefix name=name property=property %}
+    {% endblock property %}
 {% endfor %}
+</dl>

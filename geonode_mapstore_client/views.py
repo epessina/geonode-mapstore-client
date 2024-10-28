@@ -1,7 +1,6 @@
 
 from django.shortcuts import render
 from django.utils.translation.trans_real import get_language_from_request
-from django.utils import formats
 from dateutil import parser
 
 def _parse_value(value, schema):
@@ -9,8 +8,8 @@ def _parse_value(value, schema):
     format = schema.get('format')
     if schema_type == 'string' and format in ['date-time']:
         if type(value) == str:
-            return formats.date_format(parser.parse(value), "DATETIME_FORMAT")
-        return formats.date_format(value, "DATETIME_FORMAT")
+            return parser.parse(value)
+        return value
     if schema_type == 'string':
         if 'oneOf' in schema:
             for option in schema.get('oneOf'):
